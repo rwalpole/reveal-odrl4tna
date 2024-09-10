@@ -8,7 +8,7 @@
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
@@ -63,13 +63,189 @@
 						</ul>
 						<p class="fragment" data-fragment-index="4">The legislation applied to a record is the legislation in place on the date of transfer.</p>
 					</section>
+					<section>
+						<h1>Closure within PROCAT</h1>
+						<ul>
+							<li class="fragment" data-fragment-index="1">Closure type (A,N,C,D,U,F,I,V,W,R,S,T,X)</li>
+							<li class="fragment" data-fragment-index="2">Closure code (0, nn, yyyy)</li>
+							<li class="fragment" data-fragment-index="3">Closure status (C,D,O)</li>
+							<li class="fragment" data-fragment-index="4">Record opening date (YYYY-MM-DD)</li>
+						</ul>
+					</section>
+					<section>
+						<h1>Closure type</h1>
+					</section>
+					<section>
+						<h1>Closure code</h1>
+					</section>
+					<section>
+						<h1>Closure status</h1>
+					</section>
+				</section>
+				<section>
+					<section>
+						<img height="600px" src="images/Birmingham_May_1945.jpg"/>
+					</section>
+					<section>
+						<div class="r-stack">
+  						<img class="fragment" src="images/Copenhagen_1.jpg"/>
+							<img class="fragment" src="images/Copenhagen_2.jpg"/>
+							<img class="fragment" src="images/Copenhagen_3.jpg"/>
+							<img class="fragment" src="images/Copenhagen_4.jpg"/>
+						</div>
+					</section>
+					<section>
+						<img height="600px" src="images/Catalogue_Birmingham_May_1945.png"/>
+					</section>
 
 					<section>
-						<h1>Access and closure within PROCAT</h1>
 						<ul>
-							<li class="fragment" data-fragment-index="1">Record Closure</li>
-							<li class="fragment" data-fragment-index="2">Record Description Closure</li>
-						</ul>
+							<li class="fragment" data-fragment-index="1">Closure status = O</li>
+							<ul>
+								<li class="fragment" data-fragment-index="2">Open Document, Open Description</li>
+							</ul>
+							<li class="fragment" data-fragment-index="3">Closure type = N</li>
+							<ul>
+								<li class="fragment" data-fragment-index="4">Normal Closure before FOI Act</li>
+							</ul>
+							<li class="fragment" data-fragment-index="5">Closure code = 30 (years)</li>
+							<li class="fragment" data-fragment-index="6">Open date = NULL</li>
+							<li class="fragment" data-fragment-index="7">Record end date = 31st May 1945</li>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h3>Closure policy as natural language expression</h3>
+						<div>
+							<p style="font-style:italic;">"The National Archives prohibits the public from reading the record description or realisation."</p>
+						</div>
+					</section>
+					<section>
+						<h3>Closure policy as natural language expression</h3>
+						<div>
+							<p style="font-style:italic;">"The National Archives <span class="fragment highlight-red" data-fragment-index="1">(assigner)</span> prohibts <span class="fragment highlight-red" data-fragment-index="2">(prohibition)</span> the public <span class="fragment highlight-red" data-fragment-index="3">(assignees)</span> from reading <span class="fragment highlight-red" data-fragment-index="4">(action)</span> the record description or record document <span class="fragment highlight-red" data-fragment-index="5">(asset)</span>"</p>
+						</div>
+					</section>
+					<section>
+						<h2>Closure policy</h2>
+						<pre class="r-stretch"><code data-trim>
+							@prefix cat:  &lt;http://catalogue.nationalarchives.gov.uk/&gt; .
+							@prefix nat:  &lt;http://www.nationalarchives.gov.uk/&gt; .
+							@prefix xsd:  &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+							@prefix rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+							@prefix odrl: &lt;http://www.w3.org/ns/odrl/2/&gt; .
+							@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+
+							cat:policy.Closure
+							    rdf:type         odrl:Policy, odrl:Offer ;
+							    rdfs:label       "Closure"^^xsd:string ;
+							    odrl:conflict    odrl:perm ;
+							    odrl:profile     nat:odrl-profile ;
+							    odrl:prohibition [ rdf:type      odrl:Prohibition ;
+							                       odrl:assigner cat:The_National_Archives ;
+							                       odrl:assignee cat:The_Public ;
+							                       odrl:action   odrl:read ] .
+						</code><pre>
+					</section>
+					<section>
+						<h3>Closed Description policy as natural language expression</h3>
+						<div>
+							<p style="font-style:italic;">"The National Archives prohibits The Public from reading a record description."</p>
+						</div>
+					</section>
+					<section>
+						<h3>Closed Description policy as natural language expression</h3>
+						<div>
+							<p style="font-style:italic;">"The National Archives <span class="fragment highlight-red" data-fragment-index="1">(assigner)</span> prohibits <span class="fragment highlight-red" data-fragment-index="2">(prohibition)</span> The Public <span class="fragment highlight-red" data-fragment-index="3">(assignee)</span> from reading <span class="fragment highlight-red" data-fragment-index="4">(action)</span> a record description <span class="fragment highlight-red" data-fragment-index="5">(asset)</span>."</p>
+						</div>
+					</section>
+					<section>
+						<h2>Closed Description policy</h2>
+						<pre class="r-stretch"><code data-trim>
+							@prefix cat:  &lt;http://catalogue.nationalarchives.gov.uk/&gt; .
+							@prefix nat:  &lt;http://www.nationalarchives.gov.uk/&gt; .
+							@prefix xsd:  &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+							@prefix rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+							@prefix odrl: &lt;http://www.w3.org/ns/odrl/2/&gt; .
+							@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+
+							cat:policy.Closed_Description
+    						  rdf:type         odrl:Policy ;
+    							rdfs:label       "Closed Description"^^xsd:string ;
+    							odrl:conflict    odrl:perm ;
+    							odrl:profile     nat:odrl-profile ;
+    							odrl:inheritFrom cat:policy.Closure .
+						</code><pre>
+					</section>
+					<section>
+						<h3>Closed Document policy as natural language expression</h3>
+						<div>
+							<p style="font-style:italic;">"The National Archives <span style="color:red;">(assigner)</span> prohibits <span style="color:red;">(prohibition)</span> The Public <span style="color:red;">(assignees)</span> from reading <span style="color:red;">(action)</span> a record document <span style="color:red;">(asset)</span>."</p>
+						</div>
+					</section>
+					<section>
+						<h2>Closed Document policy</h2>
+						<pre class="r-stretch"><code data-trim>
+							@prefix cat:  &lt;http://catalogue.nationalarchives.gov.uk/&gt; .
+							@prefix nat:  &lt;http://www.nationalarchives.gov.uk/&gt; .
+							@prefix xsd:  &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+							@prefix rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+							@prefix odrl: &lt;http://www.w3.org/ns/odrl/2/&gt; .
+							@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+
+							cat:policy.Closed_or_Retained_Document
+    							rdf:type         odrl:Policy ;
+    							rdfs:label       "Closed or Retained Document"^^xsd:string ;
+    							odrl:conflict    odrl:perm ;
+    							odrl:profile     nat:odrl-profile ;
+    							odrl:inheritFrom cat:policy.Closure .
+						</code><pre>
+					</section>
+					<section>
+						<div>
+							<p style="font-style:italic;">"The National Archives (assigner) permits (permission) the public (assignees) to read (action) the record document (asset) after a delay period of 30 years from the record end date (temporal constraint)."</p>
+						</div>
+					</section>
+					<section>
+						<p>Normal Closure before FOI Act</p>
+						<p>30 years from 31st May 1945</p>
+						<pre class="r-stretch"><code data-trim>
+							cat:policy.Normal_Closure_before_FOI_Act_30_years_from_1945-05-31
+								rdf:type         odrl:Policy, odrl:Offer ;
+								rdfs:label
+									"Normal Closure before FOI Act: 30 years from 1945-05-31" ;
+								odrl:inheritFrom cat:policy.Closed_or_Retained_Document ;
+								odrl:conflict    odrl:perm ;
+								odrl:profile     nat:odrl-profile ;
+								odrl:permission  [ ... ] .
+						</code></pre>
+					</section>
+					<section>
+						<p>Permission to read document..</p>
+						<pre class="r-stretch"><code data-trim>
+							odrl:permission  [
+									rdf:type        odrl:Permission ;
+									odrl:assigner   cat:The_National_Archives ;
+									odrl:assignee   cat:The_Public ;
+									odrl:action     odrl:readDocument ;
+									odrl:constraint [ ... ] ] .
+						</code></pre>
+					</section>
+					<section>
+						<p>But with temporal constraints..</p>
+						<pre class="r-stretch"><code data-trim>
+							odrl:constraint [
+								rdf:type         odrl:LogicalConstraint ;
+								odrl:andSequence (
+									[ rdf:type          odrl:Constraint ;
+										odrl:leftOperand  odrl:dateTime ;
+                    odrl:operator     odrl:gt ;
+                    odrl:rightOperand "1976-12-07"^^xsd:date ]
+                  [ rdf:type odrl:Constraint ;
+                    odrl:leftOperand odrl:delayPeriod ;
+                    odrl:operator odrl:eq ;
+                    odrl:rightOperand "P30Y"^^xsd:duration ] ) ]
+						</code></pre>
 					</section>
 				</section>
 			</div>
