@@ -19,18 +19,19 @@
 				<section>
 					<section>
 						<h2>Using ODRL to represent access rights to public records at The National Archives (UK)</h2>
-						<p>Rob Walpole</p>
-						<p>rob.walpole@devexe.co.uk</p>
+						<p>Rob Walpole: rob.walpole@devexe.co.uk</p>
+						<p>Alex Green: alex.green@nationalarchives.gov.uk</p>
 					</section>
 					<section>
 						<h2>In this talk...</h2>
 						<ul>
 							<li class="fragment" data-fragment-index="1">The National Archives</li>
 							<li class="fragment" data-fragment-index="2">Legal framework for access to public records</li>
-							<li class="fragment" data-fragment-index="3">Access and closure within PROCAT</li>
+							<li class="fragment" data-fragment-index="3">Access & Closure within PROCAT</li>
 							<li class="fragment" data-fragment-index="4">Project Omega</li>
 							<li class="fragment" data-fragment-index="5">Why ODRL?</li>
 							<li class="fragment" data-fragment-index="6">Describing closure in ODRL</li>
+							<li class="fragment" data-fragment-index="7">Ship's Log example</li>
 							<li class="fragment" data-fragment-index="7">Is it open or closed?</li>
 							<li class="fragment" data-fragment-index="8">Conclusions & Future</li>
 						</ul>
@@ -63,8 +64,12 @@
 						</ul>
 						<p class="fragment" data-fragment-index="4">The legislation applied to a record is the legislation in place on the date of transfer.</p>
 					</section>
+				</section>
+				<section>
 					<section>
-						<h1>Closure within PROCAT</h1>
+						<h1>Access & Closure within PROCAT</h1>
+					</section>
+					<section>
 						<ul>
 							<li class="fragment" data-fragment-index="1">Closure type (A,N,C,D,U,F,I,V,W,R,S,T,X)</li>
 							<li class="fragment" data-fragment-index="2">Closure code (0, nn, yyyy)</li>
@@ -84,36 +89,42 @@
 				</section>
 				<section>
 					<section>
-						<img height="600px" src="images/Birmingham_May_1945.jpg"/>
+						<h1>Project Omega</h1>
+						<p>Started 2019</p>
 					</section>
 					<section>
-						<div class="r-stack">
-  						<img class="fragment" src="images/Copenhagen_1.jpg"/>
-							<img class="fragment" src="images/Copenhagen_2.jpg"/>
-							<img class="fragment" src="images/Copenhagen_3.jpg"/>
-							<img class="fragment" src="images/Copenhagen_4.jpg"/>
-						</div>
+						<img class="r-stretch r-frame" src="images/Catalogue_Model_Proposal.png"/>
 					</section>
 					<section>
-						<img height="600px" src="images/Catalogue_Birmingham_May_1945.png"/>
+						<img class="r-stretch r-frame" src="images/Catalogue_Data_Model.png"/>
 					</section>
-
 					<section>
 						<ul>
-							<li class="fragment" data-fragment-index="1">Closure status = O</li>
-							<ul>
-								<li class="fragment" data-fragment-index="2">Open Document, Open Description</li>
-							</ul>
-							<li class="fragment" data-fragment-index="3">Closure type = N</li>
-							<ul>
-								<li class="fragment" data-fragment-index="4">Normal Closure before FOI Act</li>
-							</ul>
-							<li class="fragment" data-fragment-index="5">Closure code = 30 (years)</li>
-							<li class="fragment" data-fragment-index="6">Open date = NULL</li>
-							<li class="fragment" data-fragment-index="7">Record end date = 31st May 1945</li>
+							<li>Started in 2019</h1>
+							<li>Replace PROCAT and other catalogue systems</li>
+							<li>Linked Data, graph-based catalogue</l1>
+							<li>Matterhorn RDF Data Model selected</l1>
+							existing catalogue systems including PROCAT
+								Led to creation of Pan-Archival Catalogue (PAC)
+						</ul>
 					</section>
 				</section>
 				<section>
+					<section>
+						<h1>Describing closure in ODRL</h1>
+					</section>
+					<section>
+						<h2>ODRL Asset Class</h2>
+						<p style="font-style:italic;">"An Asset class is a resource or a collection of resources that are the subject of a Rule. The Asset can be any form of identifiable resource, such as data/information, content/media, applications, services, or physical artefacts."</p>
+						<p>ODRL Information Model 2.2</p>
+					</section>
+					<section>
+						<h2>Assets within the Catalogue</h2>
+						<img class="r-stretch" src="images/Assets.png"/>
+					</section>
+					<section>
+						<h2>ODRL Profile for TNA</h2>
+					</section>
 					<section>
 						<h3>Closure policy as natural language expression</h3>
 						<div>
@@ -201,9 +212,56 @@
     							odrl:inheritFrom cat:policy.Closure .
 						</code><pre>
 					</section>
+				</section>
+				<section>
 					<section>
+						<h1>Example record: H.M.S. Birmingham Ship's Log</h1>
+						<p>(ADM 53/121006)</p>
+					</section>
+					<section>
+						<h2 class="r-fit-text">H.M.S. Birmingham Ship's Log, Month of May 1945</h2>
+						<div class="r-stack r-stretch">
+							<img class="fragment" src="images/Birmingham_May_1945.jpg"/>
+							<img class="fragment" src="images/Log_1945-05-09.jpg"/>
+							<img class="fragment" src="images/Log_1945-05-10.jpg"/>
+						</div>
+					</section>
+					<section>
+						<h2 class="r-fit-text">H.M.S. Birmingham, Liberation of Copenhagen, May 1945</h2>
+						<div class="r-stack r-stretch">
+							<img class="fragment" src="images/Copenhagen_1.jpg"/>
+							<img class="fragment" src="images/Copenhagen_2.jpg"/>
+							<img class="fragment" src="images/Copenhagen_3.jpg"/>
+							<img class="fragment" src="images/Copenhagen_4.jpg"/>
+						</div>
+					</section>
+					<section>
+						<h2 class="r-fit-text">ADM 53/121006 within Discovery (public catalogue)</h2>
+						<img class="r-stretch" src="images/Catalogue_Birmingham_May_1945.png"/>
+					</section>
+					<section>
+						<h2 class="r-fit-text">Closure information for ADM 53/121006</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="1">Closure status = O</li>
+							<ul>
+								<li class="fragment" data-fragment-index="2">Open Document, Open Description</li>
+							</ul>
+							<li class="fragment" data-fragment-index="3">Closure type = N</li>
+							<ul>
+								<li class="fragment" data-fragment-index="4">Normal Closure before FOI Act</li>
+							</ul>
+							<li class="fragment" data-fragment-index="5">Closure code = 30 (years)</li>
+							<li class="fragment" data-fragment-index="6">Open date = NULL</li>
+							<li class="fragment" data-fragment-index="7">Record end date = 31st May 1945</li>
+					</section>
+					<section>
+						<h2 class="r-fit-text">ODRL policies and inheritance for ADM 53/121006</h2>
+						<img class="r-stretch" src="images/Birmingham_Closure.png"/>
+					</section>
+					<section>
+						<h2 class="r-fit-text">Closure policy for ADM 53/121006 as natural language</h2>
 						<div>
-							<p style="font-style:italic;">"The National Archives (assigner) permits (permission) the public (assignees) to read (action) the record document (asset) after a delay period of 30 years from the record end date (temporal constraint)."</p>
+							<p style="font-style:italic;">"The National Archives (assigner) permits (permission) the public (assignees) to read (action) the ADM 53/121006 record document (asset) after a delay period of 30 years from the 31st May 1945 (temporal constraint)."</p>
 						</div>
 					</section>
 					<section>
@@ -240,13 +298,16 @@
 									[ rdf:type          odrl:Constraint ;
 										odrl:leftOperand  odrl:dateTime ;
                     odrl:operator     odrl:gt ;
-                    odrl:rightOperand "1976-12-07"^^xsd:date ]
+                    odrl:rightOperand "1945-05-31"^^xsd:date ]
                   [ rdf:type odrl:Constraint ;
                     odrl:leftOperand odrl:delayPeriod ;
                     odrl:operator odrl:eq ;
                     odrl:rightOperand "P30Y"^^xsd:duration ] ) ]
 						</code></pre>
 					</section>
+				</section>
+				<section>
+
 				</section>
 			</div>
 		</div>
