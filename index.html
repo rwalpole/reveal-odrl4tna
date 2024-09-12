@@ -1,17 +1,18 @@
-<!doctype html>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
-		<title>reveal.js</title>
+		<title>Using ODRL to represent access rights to public records at The National Archives (UK)</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/white.css">
+		<link rel="stylesheet" href="dist/reset.css"/>
+		<link rel="stylesheet" href="dist/reveal.css"/>
+		<link rel="stylesheet" href="dist/theme/white.css"/>
 
 		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="plugin/highlight/monokai.css"/>
 	</head>
 	<body>
 		<div class="reveal">
@@ -19,30 +20,34 @@
 				<section>
 					<section>
 						<h2>Using ODRL to represent access rights to public records at The National Archives (UK)</h2>
-						<p>Rob Walpole: rob.walpole@devexe.co.uk</p>
-						<p>Alex Green: alex.green@nationalarchives.gov.uk</p>
+						<div>NXDG 2024 - Amsterdam - 17th September 2024</div>
+						<div>Rob Walpole: rob.walpole@devexe.co.uk</div>
+						<div>Alex Green: alex.green@nationalarchives.gov.uk</div>
+						<div class="r-stretch">
+							<img src="images/Devexe_logo.png"/>
+							<img src="images/tna-blk-logo.svg"/>
+						</div>
 					</section>
 					<section>
 						<h2>In this talk...</h2>
 						<ul>
 							<li class="fragment" data-fragment-index="1">The National Archives</li>
 							<li class="fragment" data-fragment-index="2">Legal framework for access to public records</li>
-							<li class="fragment" data-fragment-index="3">Access & Closure within PROCAT</li>
+							<li class="fragment" data-fragment-index="3">Closure within PROCAT</li>
 							<li class="fragment" data-fragment-index="4">Project Omega</li>
-							<li class="fragment" data-fragment-index="5">Why ODRL?</li>
 							<li class="fragment" data-fragment-index="6">Describing closure in ODRL</li>
-							<li class="fragment" data-fragment-index="7">Ship's Log example</li>
-							<li class="fragment" data-fragment-index="7">Is it open or closed?</li>
-							<li class="fragment" data-fragment-index="8">Conclusions & Future</li>
+							<li class="fragment" data-fragment-index="7">Example record: H.M.S. Birmingham Ship's Log</li>
+							<li class="fragment" data-fragment-index="8">So.. is it open or closed?</li>
+							<li class="fragment" data-fragment-index="9">Conclusions &amp; Future</li>
 						</ul>
 					</section>
 				</section>
 				<section>
 					<section>
-						<h1>The National Archives</h1>
+						<h1 class="r-stretch"><img alt="The National Archives" src="images/tna-blk-logo.svg"/></h1>
 					</section>
 					<section>
-						<img height="600px" src="images/TNA.jpg"/>
+						<img height="600" src="images/TNA.jpg"/>
 					</section>
 					<section>
 						<h2>What does The National Archives do?</h2>
@@ -56,35 +61,70 @@
 				</section>
 				<section>
 					<section>
-						<h2>Legal framework for access to public records</h2>
-						<ul>
-							<li class="fragment" data-fragment-index="1">1958 Public Record Act</li>
-							<li class="fragment" data-fragment-index="2">The Public Record Act 1967</li>
-							<li class="fragment" data-fragment-index="3">Freedom of Information Act 2000</li>
-						</ul>
-						<p class="fragment" data-fragment-index="4">The legislation applied to a record is the legislation in place on the date of transfer.</p>
+						<h1>Legal framework for access to public records</h1>
+					</section>
+					<section data-transition="zoom">
+						<img class="r-stretch" src="images/Public_Records_Act_1958.png"/>
+						<p>Formalised closure with 50 year period from date of creation</p>
+					</section>
+					<section data-transition="zoom">
+						<img class="r-stretch" src="images/Public_Records_Act_1967.png"/>
+						<p>Reduced closure period to 30 years</p>
+					</section>
+					<section data-transition="zoom">
+						<img class="r-stretch" src="images/Freedom_of_Information_Act_2000.png"/>
+						<p>Removed closure altogether unless exemption applied</p>
 					</section>
 				</section>
 				<section>
 					<section>
-						<h1>Access & Closure within PROCAT</h1>
+						<h1>Closure within PROCAT</h1>
 					</section>
 					<section>
+						<h2>Data elements relating to closure</h2>
 						<ul>
-							<li class="fragment" data-fragment-index="1">Closure type (A,N,C,D,U,F,I,V,W,R,S,T,X)</li>
+							<li class="fragment" data-fragment-index="1">Closure type (A,D,F,I,N,R,S,T,U)</li>
 							<li class="fragment" data-fragment-index="2">Closure code (0, nn, yyyy)</li>
 							<li class="fragment" data-fragment-index="3">Closure status (C,D,O)</li>
 							<li class="fragment" data-fragment-index="4">Record opening date (YYYY-MM-DD)</li>
+							<li class="fragment" data-fragment-index="5">Record end date (YYYY-MM-DD)</li>
 						</ul>
 					</section>
 					<section>
-						<h1>Closure type</h1>
+						<h2>Closure type</h2>
+						<ul class="r-stretch">
+							<li class="fragment" data-fragment-index="1">A - Open on Transfer</li>
+							<li class="fragment" data-fragment-index="2">D - Retained Until</li>
+							<li class="fragment" data-fragment-index="3">F - Closed For</li>
+							<li class="fragment" data-fragment-index="4">I - Open Immediately</li>
+							<li class="fragment" data-fragment-index="5">N - Normal Closure before FOI Act</li>
+							<li class="fragment" data-fragment-index="6">R - Retained by Department</li>
+							<li class="fragment" data-fragment-index="7">S - Retained by Department under Section 3.4</li>
+							<li class="fragment" data-fragment-index="8">T - Temporarily Retained by Department</li>
+							<li class="fragment" data-fragment-index="9">U - Closed Until</li>
+						</ul>
 					</section>
 					<section>
-						<h1>Closure code</h1>
+						<h2>Closure code</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="1">Open on Transfer = always 0</li>
+							<li class="fragment" data-fragment-index="2">Retained Until = a year (yyyy)</li>
+							<li class="fragment" data-fragment-index="3">Closed For = a number of years (nn)</li>
+							<li class="fragment" data-fragment-index="4">Open Immediately = always 0</li>
+							<li class="fragment" data-fragment-index="5">Normal Closure before FOI Act = always 30 years</li>
+							<li class="fragment" data-fragment-index="6">Retained by Department = N/A</li>
+							<li class="fragment" data-fragment-index="7">Retained by Department under Section 3.4 = N/A</li>
+							<li class="fragment" data-fragment-index="8">Temporarily Retained by Department = N/A</li>
+							<li class="fragment" data-fragment-index="9">Closed Until = a year (yyyy)</li>
+						</ul>
 					</section>
 					<section>
-						<h1>Closure status</h1>
+						<h2>Closure status</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="1">C - Closed or Retained Document, Closed Description</li>
+							<li class="fragment" data-fragment-index="2">D - Closed or Retained Document, Open Description</li>
+							<li class="fragment" data-fragment-index="3">O - Open Document, Open Description</li>
+						</ul>
 					</section>
 				</section>
 				<section>
@@ -93,19 +133,65 @@
 						<p>Started 2019</p>
 					</section>
 					<section>
-						<img class="r-stretch r-frame" src="images/Catalogue_Model_Proposal.png"/>
+						<div class="r-stretch">
+							<img class="r-frame" src="images/Catalogue_Model_Proposal.png"/>
+						</div>
 					</section>
 					<section>
-						<img class="r-stretch r-frame" src="images/Catalogue_Data_Model.png"/>
-					</section>
-					<section>
+						<h2>Catalogue Model Proposal</h2>
 						<ul>
-							<li>Started in 2019</h1>
-							<li>Replace PROCAT and other catalogue systems</li>
-							<li>Linked Data, graph-based catalogue</l1>
-							<li>Matterhorn RDF Data Model selected</l1>
-							existing catalogue systems including PROCAT
-								Led to creation of Pan-Archival Catalogue (PAC)
+							<li class="fragment" data-fragment-index="1">Replace PROCAT and other catalogue systems</li>
+							<li class="fragment" data-fragment-index="2">Linked Data, graph-based catalogue</li>
+							<li class="fragment" data-fragment-index="3">Utilise Matterhorn RDF Data Model</li>
+						</ul>
+					</section>
+					<section>
+						<div class="r-stretch">
+							<img class="r-frame" src="images/Catalogue_Data_Model.png"/>
+						</div>
+					</section>
+					<section>
+						<h2>Catalogue Data Model</h2>
+						<img class="r-stretch" src="images/ocdm_description_of_a_record_item.png"/>
+					</section>
+					<section>
+						<h2>ETL built with Pentaho Data Integration (Kettle)</h2>
+						<img class="r-stretch" src="images/Item_Export_Job.png"/>
+					</section>
+					<section>
+							<pre class="r-stretch" style="font-size:1ex;"><code data-trim="true">
+								@prefix premis: &lt;http://www.loc.gov/premis/rdf/v3/&gt; .
+								@prefix schema: &lt;https://schema.org/&gt; .
+								@prefix dct:    &lt;http://purl.org/dc/terms/&gt; .
+								@prefix rdf:    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+								@prefix cat:    &lt;http://catalogue.nationalarchives.gov.uk/&gt; .
+								@prefix odrl:   &lt;http://www.w3.org/ns/odrl/2/&gt; .
+
+								cat:ADM.2021.2NW6VY.P.1
+									a                     premis:IntellectualEntity ;
+									schema:identifier     [
+									 		a                 schema:identifier ;
+											schema:propertyID &lt;http://www.nationalarchives.gov.uk/ont.ccr&gt; ;
+											schema:value      "ADM 53/121006"
+									] ;
+									dct:abstract
+											"&lt;scopecontent&gt;&lt;p&gt;BIRMINGHAM&lt;/p&gt;&lt;/scopecontent&gt;"^^rdf:XMLLiteral ;
+									dct:accessRights      [
+											a              dct:RightsStatement ;
+											odrl:hasPolicy
+											 		cat:policy.Open_Description,
+													cat:policy.Normal_Closure_before_FOI_Act_30_years_from_1945-05-31
+									] .
+							</code></pre>
+					</section>
+					<section>
+						<h2>Why ODRL?</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="1">Project Omega had already made the decision to use an RDF graph model</li>
+							<li class="fragment" data-fragment-index="2">Matterhorn approach encourages reusing existing vocabularies</li>
+							<li class="fragment" data-fragment-index="3">ODRL stood out as established, well-documented and flexible</li>
+							<li class="fragment" data-fragment-index="4">Subject of two W3C recommendations</li>
+							<li class="fragment" data-fragment-index="5">Aligned with Government Digital Services guidelines</li>
 						</ul>
 					</section>
 				</section>
@@ -120,11 +206,30 @@
 					</section>
 					<section>
 						<h2>Assets within the Catalogue</h2>
-						<img class="r-stretch" src="images/Assets.png"/>
+						<div class="r-stretch r-stack">
+							<img class="fragment" src="images/Assets.png"/>
+							<img class="fragment" src="images/Assets2.png"/>
+						</div>
 					</section>
 					<section>
 						<h2>ODRL Profile for TNA</h2>
+						<pre><code data-trim="true">
+							odrl:readDescription
+							 	rdf:type owl:NamedIndividual , skos:Concept , odrl:Action ;
+                odrl:includedIn odrl:read ;
+                rdfs:isDefinedBy odrl: ;
+                rdfs:label "Read Description"@en ;
+                skos:definition "To read a record description." .
+
+							odrl:readDocument
+							 	rdf:type owl:NamedIndividual , skos:Concept , odrl:Action ;
+                odrl:includedIn odrl:read ;
+                rdfs:isDefinedBy odrl: ;
+                rdfs:label "Read Document"@en ;
+                skos:definition "To read a record document." .
+						</code></pre>
 					</section>
+
 					<section>
 						<h3>Closure policy as natural language expression</h3>
 						<div>
@@ -139,7 +244,7 @@
 					</section>
 					<section>
 						<h2>Closure policy</h2>
-						<pre class="r-stretch"><code data-trim>
+						<pre class="r-stretch"><code data-trim="true">
 							@prefix cat:  &lt;http://catalogue.nationalarchives.gov.uk/&gt; .
 							@prefix nat:  &lt;http://www.nationalarchives.gov.uk/&gt; .
 							@prefix xsd:  &lt;http://www.w3.org/2001/XMLSchema#&gt; .
@@ -156,7 +261,7 @@
 							                       odrl:assigner cat:The_National_Archives ;
 							                       odrl:assignee cat:The_Public ;
 							                       odrl:action   odrl:read ] .
-						</code><pre>
+						</code></pre>
 					</section>
 					<section>
 						<h3>Closed Description policy as natural language expression</h3>
@@ -172,7 +277,7 @@
 					</section>
 					<section>
 						<h2>Closed Description policy</h2>
-						<pre class="r-stretch"><code data-trim>
+						<pre class="r-stretch"><code data-trim="true">
 							@prefix cat:  &lt;http://catalogue.nationalarchives.gov.uk/&gt; .
 							@prefix nat:  &lt;http://www.nationalarchives.gov.uk/&gt; .
 							@prefix xsd:  &lt;http://www.w3.org/2001/XMLSchema#&gt; .
@@ -186,7 +291,7 @@
     							odrl:conflict    odrl:perm ;
     							odrl:profile     nat:odrl-profile ;
     							odrl:inheritFrom cat:policy.Closure .
-						</code><pre>
+						</code></pre>
 					</section>
 					<section>
 						<h3>Closed Document policy as natural language expression</h3>
@@ -196,7 +301,7 @@
 					</section>
 					<section>
 						<h2>Closed Document policy</h2>
-						<pre class="r-stretch"><code data-trim>
+						<pre class="r-stretch"><code data-trim="true">
 							@prefix cat:  &lt;http://catalogue.nationalarchives.gov.uk/&gt; .
 							@prefix nat:  &lt;http://www.nationalarchives.gov.uk/&gt; .
 							@prefix xsd:  &lt;http://www.w3.org/2001/XMLSchema#&gt; .
@@ -210,7 +315,7 @@
     							odrl:conflict    odrl:perm ;
     							odrl:profile     nat:odrl-profile ;
     							odrl:inheritFrom cat:policy.Closure .
-						</code><pre>
+						</code></pre>
 					</section>
 				</section>
 				<section>
@@ -243,16 +348,22 @@
 						<h2 class="r-fit-text">Closure information for ADM 53/121006</h2>
 						<ul>
 							<li class="fragment" data-fragment-index="1">Closure status = O</li>
-							<ul>
-								<li class="fragment" data-fragment-index="2">Open Document, Open Description</li>
-							</ul>
+							<li>
+								<ul>
+									<li class="fragment" data-fragment-index="2">Open Document, Open Description</li>
+								</ul>
+							</li>
 							<li class="fragment" data-fragment-index="3">Closure type = N</li>
-							<ul>
-								<li class="fragment" data-fragment-index="4">Normal Closure before FOI Act</li>
-							</ul>
+							<li>
+								<ul>
+
+									<li class="fragment" data-fragment-index="4">Normal Closure before FOI Act</li>
+								</ul>
+							</li>
 							<li class="fragment" data-fragment-index="5">Closure code = 30 (years)</li>
 							<li class="fragment" data-fragment-index="6">Open date = NULL</li>
 							<li class="fragment" data-fragment-index="7">Record end date = 31st May 1945</li>
+						</ul>
 					</section>
 					<section>
 						<h2 class="r-fit-text">ODRL policies and inheritance for ADM 53/121006</h2>
@@ -267,7 +378,7 @@
 					<section>
 						<p>Normal Closure before FOI Act</p>
 						<p>30 years from 31st May 1945</p>
-						<pre class="r-stretch"><code data-trim>
+						<pre class="r-stretch"><code data-trim="true" data-line-numbers="1-8|8-13|13-24">
 							cat:policy.Normal_Closure_before_FOI_Act_30_years_from_1945-05-31
 								rdf:type         odrl:Policy, odrl:Offer ;
 								rdfs:label
@@ -275,39 +386,35 @@
 								odrl:inheritFrom cat:policy.Closed_or_Retained_Document ;
 								odrl:conflict    odrl:perm ;
 								odrl:profile     nat:odrl-profile ;
-								odrl:permission  [ ... ] .
-						</code></pre>
-					</section>
-					<section>
-						<p>Permission to read document..</p>
-						<pre class="r-stretch"><code data-trim>
-							odrl:permission  [
+								odrl:permission  [
 									rdf:type        odrl:Permission ;
 									odrl:assigner   cat:The_National_Archives ;
 									odrl:assignee   cat:The_Public ;
 									odrl:action     odrl:readDocument ;
-									odrl:constraint [ ... ] ] .
-						</code></pre>
-					</section>
-					<section>
-						<p>But with temporal constraints..</p>
-						<pre class="r-stretch"><code data-trim>
-							odrl:constraint [
-								rdf:type         odrl:LogicalConstraint ;
-								odrl:andSequence (
-									[ rdf:type          odrl:Constraint ;
-										odrl:leftOperand  odrl:dateTime ;
-                    odrl:operator     odrl:gt ;
-                    odrl:rightOperand "1945-05-31"^^xsd:date ]
-                  [ rdf:type odrl:Constraint ;
-                    odrl:leftOperand odrl:delayPeriod ;
-                    odrl:operator odrl:eq ;
-                    odrl:rightOperand "P30Y"^^xsd:duration ] ) ]
+									odrl:constraint [
+										rdf:type         odrl:LogicalConstraint ;
+										odrl:andSequence (
+											[ rdf:type          odrl:Constraint ;
+												odrl:leftOperand  odrl:dateTime ;
+												odrl:operator     odrl:gt ;
+												odrl:rightOperand "1945-05-31"^^xsd:date ]
+											[ rdf:type odrl:Constraint ;
+												odrl:leftOperand odrl:delayPeriod ;
+												odrl:operator odrl:eq ;
+												odrl:rightOperand "P30Y"^^xsd:duration ] ) ]
+											] ] .
 						</code></pre>
 					</section>
 				</section>
 				<section>
-
+					<section>
+						<h1>So.. is it open or closed?</h1>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h1>Conclusions &amp; Future</h1>
+					</section>
 				</section>
 			</div>
 		</div>
@@ -317,7 +424,7 @@
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
 		<script>
-			// More info about initialization & config:
+			// More info about initialization &amp; config:
 			// - https://revealjs.com/initialization/
 			// - https://revealjs.com/config/
 			Reveal.initialize({
