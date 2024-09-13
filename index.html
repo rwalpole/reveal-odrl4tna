@@ -19,13 +19,13 @@
 			<div class="slides">
 				<section>
 					<section>
-						<h2>Using ODRL to represent access rights to public records at The National Archives (UK)</h2>
-						<div>NXDG 2024 - Amsterdam - 17th September 2024</div>
+						<h1 style="font-size:1.5em;">Using ODRL to represent access rights to public records at The National Archives (UK)</h1>
+						<p style="font-weight:bold;">NXDG 2024 - Amsterdam - 17th September 2024</p>
 						<div>Rob Walpole: rob.walpole@devexe.co.uk</div>
 						<div>Alex Green: alex.green@nationalarchives.gov.uk</div>
 						<div class="r-stretch">
-							<img src="images/Devexe_logo.png"/>
-							<img src="images/tna-blk-logo.svg"/>
+							<img height="100" src="images/Devexe_logo.png"/>
+							<img height="100" src="images/tna-blk-logo.svg"/>
 						</div>
 					</section>
 					<section>
@@ -348,18 +348,13 @@
 						<h2 class="r-fit-text">Closure information for ADM 53/121006</h2>
 						<ul>
 							<li class="fragment" data-fragment-index="1">Closure status = O</li>
-							<li>
-								<ul>
+							<ul>
 									<li class="fragment" data-fragment-index="2">Open Document, Open Description</li>
-								</ul>
-							</li>
+							</ul>
 							<li class="fragment" data-fragment-index="3">Closure type = N</li>
-							<li>
-								<ul>
-
-									<li class="fragment" data-fragment-index="4">Normal Closure before FOI Act</li>
-								</ul>
-							</li>
+							<ul>
+								<li class="fragment" data-fragment-index="4">Normal Closure before FOI Act</li>
+							</ul>
 							<li class="fragment" data-fragment-index="5">Closure code = 30 (years)</li>
 							<li class="fragment" data-fragment-index="6">Open date = NULL</li>
 							<li class="fragment" data-fragment-index="7">Record end date = 31st May 1945</li>
@@ -410,10 +405,177 @@
 					<section>
 						<h1>So.. is it open or closed?</h1>
 					</section>
+					<section>
+						<h2 class="r-fit-text">An example of machine reading of ODRL using SPARQL</h2>
+						<pre class="r-stretch"><code data-trim="true" data-line-numbers="1-53|54-63|64-100">
+PREFIX cat: &lt;http://cat.nationalarchives.gov.uk/&gt;
+PREFIX dct: &lt;http://purl.org/dc/terms/&gt;
+PREFIX nat: &lt;http://www.nationalarchives.gov.uk/&gt;
+PREFIX odrl: &lt;http://www.w3.org/ns/odrl/2/&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+
+CONSTRUCT {
+	?policyUri	a odrl:Policy, odrl:Offer ;
+							odrl:profile nat:odrl-profile ;
+              odrl:conflict ?conflict ;
+              odrl:permission ?b1 ;
+              odrl:prohibition ?b2 .
+	?b1 ?p1 ?v1 ;
+    	odrl:assigner cat:The_National_Archives ;
+      odrl:target ?resource .
+  ?b2 ?p2 ?v2 ;
+      odrl:assigner cat:The_National_Archives ;
+      odrl:target ?resource .
+  ?b1 odrl:constraint ?c1 .
+  ?c1 ?c2 ?c3 .
+  ?b1 odrl:constraint ?bnode .
+  ?bnode	rdf:type odrl:Constraint ;
+         	odrl:leftOperand odrl:dateTime ;
+        	odrl:operator odrl:gt ;
+        	odrl:rightOperand ?openingDate .
+}
+WHERE
+{
+	BIND(cat:ADM.2021.2NW6VY.P.1 AS ?resource)
+  ?resource dct:identifier ?identifier
+  BIND(URI(CONCAT(?identifier,"-policy")) AS ?policyUri)
+  {
+  	{
+      SELECT DISTINCT ?permission
+      WHERE {
+				BIND(cat:ADM.2021.2NW6VY.P.1 AS ?resource)
+        ?resource dct:accessRights ?accessRights .
+        ?accessRights odrl:hasPolicy ?policy .
+        { ?policy odrl:permission ?permission . }
+        UNION
+        {
+					?policy odrl:inheritFrom+ ?parentPolicy .
+          ?parentPolicy odrl:permission ?permission
+        }
+      }
+		}
+    BIND(BNODE() AS ?b1)
+    OPTIONAL {
+    	?permission odrl:constraint ?constraint .
+      FILTER NOT EXISTS { ?constraint odrl:andSequence ?sequence . }
+      BIND(BNODE() AS ?c1)
+      ?constraint ?c2 ?c3 .
+    }
+    OPTIONAL {
+  	 	?permission odrl:constraint ?constraint .
+      ?constraint odrl:andSequence ?seq .
+      ?seq rdf:first ?firstConstraint .
+      ?seq rdf:rest/rdf:first ?secondConstraint .
+      ?firstConstraint odrl:rightOperand ?lastDate .
+      ?secondConstraint  odrl:rightOperand ?duration .
+      BIND((?lastDate + ?duration) AS ?openingDate) .
+      BIND(BNODE() AS ?bnode)
+    }
+    ?permission ?p1 ?v1 .
+    FILTER(?p1 NOT IN(odrl:constraint)) .
+  }
+  UNION
+  {
+    {
+      SELECT DISTINCT ?prohibition
+      WHERE {
+      	BIND(cat:ADM.2021.2NW6VY.P.1 AS ?resource)
+        ?resource dct:accessRights ?accessRights .
+        ?accessRights odrl:hasPolicy ?policy .
+        { ?policy odrl:prohibition ?prohibition . }
+        UNION
+        {
+        	?policy odrl:inheritFrom+ ?parentPolicy .
+          ?parentPolicy odrl:prohibition ?prohibition
+        }
+      }
+		}
+    BIND(BNODE() AS ?b2)
+    ?prohibition ?p2 ?v2 .
+  }
+  {
+  	SELECT DISTINCT ?conflict
+    WHERE {
+    	BIND(cat:ADM.2021.2NW6VY.P.1 AS ?resource)
+      ?resource dct:accessRights ?accessRights .
+      ?accessRights odrl:hasPolicy ?policy .
+      { ?policy odrl:conflict ?conflict . }
+      UNION
+      {
+      	?policy odrl:inheritFrom+ ?parentPolicy .
+        ?parentPolicy odrl:conflict ?conflict .
+      }
+    }
+  }
+}
+						</code></pre>
+					</section>
+					<section>
+						<h2 >Generated policy</h2>
+						<pre class="r-stretch"><code data-trim="true" data-line-numbers="1-8|9|10-22|23-29|30|31-37">
+							@prefix nat:   &lt;http://www.nationalarchives.gov.uk/&gt; .
+							@prefix rdf:   &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+							@prefix cat:   &lt;http://cat.nationalarchives.gov.uk/&gt; .
+							@prefix xs:    &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+							@prefix odrl:  &lt;http://www.w3.org/ns/odrl/2/&gt; .
+
+							cat:ADM.2021.2NW6VY.P.1-policy
+							    rdf:type          odrl:Offer , odrl:Policy ;
+							    odrl:conflict     odrl:perm ;
+							    odrl:permission   [
+										rdf:type         odrl:Permission ;
+							      odrl:action      odrl:readDocument ;
+							      odrl:assignee    cat:The_Public ;
+							      odrl:assigner    cat:The_National_Archives ;
+							      odrl:constraint  [
+										 	rdf:type           odrl:Constraint ;
+							        odrl:leftOperand   odrl:dateTime ;
+							        odrl:operator      odrl:gt ;
+							        odrl:rightOperand  "1975-05-31"^^xs:date
+							      ] ;
+							      odrl:target      cat:ADM.2021.2NW6VY.P.1
+							    ] ;
+							    odrl:permission   [
+									 	rdf:type       odrl:Permission ;
+							      odrl:action    odrl:readDescription ;
+							      odrl:assignee  cat:The_Public ;
+							      odrl:assigner  cat:The_National_Archives ;
+							      odrl:target    cat:ADM.2021.2NW6VY.P.1
+							    ] ;
+							    odrl:profile      nat:odrl-profile ;
+							    odrl:prohibition  [
+									 	rdf:type       odrl:Prohibition ;
+							      odrl:action    odrl:read ;
+							      odrl:assignee  cat:The_Public ;
+							      odrl:assigner  cat:The_National_Archives ;
+							      odrl:target    cat:ADM.2021.2NW6VY.P.1
+							    ] .
+						</code></pre>
+					</section>
 				</section>
 				<section>
 					<section>
 						<h1>Conclusions &amp; Future</h1>
+					</section>
+					<section>
+						<h2>Conclusions</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="1">Record closure can be defined very precisely in terms of ODRL</li>
+							<li class="fragment" data-fragment-index="2">Using ODRL will simplify how closure is applied</li>
+							<li class="fragment" data-fragment-index="3">Using Linked Data will allow TNA to link to Legislation</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Future</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="1">ODRL's flexibiliy will allow different degrees of access in future</li>
+							<ul>
+								<li class="fragment" data-fragment-index="2">Access via Internet vs requirement to visit</li>
+								<li class="fragment" data-fragment-index="3">Google search vs Discovery</li>
+							</ul>
+							<li class="fragment" data-fragment-index="3">More work to do for other levels of the catalogue</li>
+							<li class="fragment" data-fragment-index="3">Open questions around closure workflow to be resolved</li>
+						</ul>
 					</section>
 				</section>
 			</div>
