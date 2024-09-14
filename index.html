@@ -45,22 +45,23 @@
 				<section>
 					<section>
 						<h1 class="r-stretch"><img alt="The National Archives" src="images/tna-blk-logo.svg"/></h1>
+						<p style="font-weight:bold;">(TNA)</p>
 					</section>
 					<section>
-						<img height="600" src="images/TNA.jpg"/>
-						<p>(TNA)</p> <!-- TODO test -->
+						<img class="r-stretch"AAAAheight="600" src="images/TNA.jpg"/>
+						<p>TNA in Kew</p>
 					</section>
 					<section>
-						<h2>What does The National Archives do?</h2>
+						<h2>What is TNA?</h2>
 						<ul>
-							<li class="fragment" data-fragment-index="1">Official archive for UK Government</li>
-							<li class="fragment" data-fragment-index="2">Official archive for England and Wales</li>
-							<li class="fragment" data-fragment-index="3">Vast archive with over 11 million records</li>
-							<li class="fragment" data-fragment-index="4">Covering 1000 years of history</li>
-							<li class="fragment" data-fragment-index="5">Types of record...</li> <!-- TODO -->
-							<li>Closure makes everyone groan at the archives beacuse it is a complex and important aspect</li>
-							<li>Nobody wants to be the one to get it wrong!</li>
-							<li>It's a unique place of international importance which has evolved over many years with very valuable and sometime sensitive information.</li> <!-- TODO -->
+							<li class="fragment" data-fragment-index="1">Public Record Office (PRO) opened in 1838</li>
+							<li class="fragment" data-fragment-index="2">TNA created in 2003</li>
+							<li class="fragment" data-fragment-index="3">Official archive for UK Government</li>
+							<li class="fragment" data-fragment-index="4">Official archive for England and Wales</li>
+							<li class="fragment" data-fragment-index="5">Vast archive with over 11 million records</li>
+							<li class="fragment" data-fragment-index="6">Covering 1000 years of history</li>
+							<li class="fragment" data-fragment-index="7">Invaluable source of information for historians, authors and anyone interested in the past</li>
+							<li class="fragment" data-fragment-index="8">Records as paper, parchment, photos, fmaps, drawings, spreadsheets, websitesf.. etc.</li>
 						</ul>
 					</section>
 				</section>
@@ -83,12 +84,23 @@
 				</section>
 				<section>
 					<section>
-						<h1>Closure within PROCAT</h1>
+						<h1>Closure within PROCat</h1>
 					</section>
 					<section>
 						<h2>PROCAT</h2>
-						<p>20 years old..</p> <!-- TODO -->
-						<p>Record Document vs Record Description</p>
+						<ul>
+							<li class="fragment" data-fragment-index="1"><span style="font-weight:bold;">P</span>ublic <span style="font-weight:bold;">R</span>ecord <span style="font-weight:bold;">O</span>ffice <span style="font-weight:bold;">Cat</span>alogue</li>
+							<li class="fragment" data-fragment-index="2">Around 20 years old, RDBMS backed system at EOL</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Closure</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="1">Relates to document and description of record</li>
+							<li class="fragment" data-fragment-index="2">Has evolved over time, along with the legislation</li>
+							<li class="fragment" data-fragment-index="3">Getting it wrong would be very bad!</li>
+							<li class="fragment" data-fragment-index="4">Perhaps for this reason, nobody really likes meddling with it!</li>
+						</ul>
 					</section>
 					<section>
 						<h2>Data elements relating to closure</h2>
@@ -146,13 +158,16 @@
 						<div class="r-stretch">
 							<img class="r-frame" src="images/Catalogue_Model_Proposal.png"/>
 						</div>
+						<p>Scope: identify and prove a new data model and technology stack for a PROCat replacement</p>
 					</section>
 					<section>
 						<h2>Catalogue Model Proposal</h2>
 						<ul>
-							<li class="fragment" data-fragment-index="1">Replace PROCAT and other catalogue systems</li>
-							<li class="fragment" data-fragment-index="2">Linked Data, graph-based catalogue</li>
-							<li class="fragment" data-fragment-index="3">Utilise Matterhorn RDF Data Model</li> <!-- TODO explain -->
+							<li class="fragment" data-fragment-index="1">Replace PROCat <span style="font-style:italic;font-weight:bold;">and other catalogue systems</span></li>
+							<li class="fragment" data-fragment-index="2">Create a single source of truth for TNA records</li>
+							<li class="fragment" data-fragment-index="3">Use a Linked Data, graph-based catalogue</li>
+							<li class="fragment" data-fragment-index="4">Use Matterhorn RDF Data Model as a starting point</li>
+							<li class="fragment" data-fragment-index="5">Matterhorn promotes reuse of existing vocabularies</li>
 						</ul>
 					</section>
 					<section>
@@ -161,8 +176,7 @@
 						</div>
 					</section>
 					<section>
-						<h2>Catalogue Data Model</h2>
-						<!-- TODO - what is this? -->
+						<h2>New record model</h2>
 						<img class="r-stretch" src="images/ocdm_description_of_a_record_item.png"/>
 					</section>
 					<section>
@@ -241,12 +255,16 @@
 						</code></pre>
 					</section>
 					<section>
-						<h2>Default policy of closure</h2> <!-- TODO describe -->
-						<p>Protect records for National Security or personal reasons</p>
-						<p>ODRL has policy hierarchy</p>
+						<h2>Default policy of closure</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="1">Default prohibition on the general public reading anything within the records</li>
+							<li class="fragment" data-fragment-index="2">Requirement to specifically state at the record level that the information was open</li>
+							<li class="fragment" data-fragment-index="3">Protect information from being released unintentionally or prematurely</li>
+							<li class="fragment" data-fragment-index="4">Achieved by making use of policy inhertiance within ODRL</li>
+						</ul>
 					</section>
 					<section>
-						<h3>Default closure policy as natural language expression</h3> <!-- TODO test -->
+						<h3>Default closure policy as natural language expression</h3>
 						<div>
 							<p style="font-style:italic;">"The National Archives prohibits the public from reading the record description or realisation."</p>
 						</div>
