@@ -48,14 +48,19 @@
 					</section>
 					<section>
 						<img height="600" src="images/TNA.jpg"/>
+						<p>(TNA)</p> <!-- TODO test -->
 					</section>
 					<section>
 						<h2>What does The National Archives do?</h2>
 						<ul>
 							<li class="fragment" data-fragment-index="1">Official archive for UK Government</li>
 							<li class="fragment" data-fragment-index="2">Official archive for England and Wales</li>
-							<li class="fragment" data-fragment-index="3">Over 11 million records</li>
+							<li class="fragment" data-fragment-index="3">Vast archive with over 11 million records</li>
 							<li class="fragment" data-fragment-index="4">Covering 1000 years of history</li>
+							<li class="fragment" data-fragment-index="5">Types of record...</li> <!-- TODO -->
+							<li>Closure makes everyone groan at the archives beacuse it is a complex and important aspect</li>
+							<li>Nobody wants to be the one to get it wrong!</li>
+							<li>It's a unique place of international importance which has evolved over many years with very valuable and sometime sensitive information.</li> <!-- TODO -->
 						</ul>
 					</section>
 				</section>
@@ -79,6 +84,11 @@
 				<section>
 					<section>
 						<h1>Closure within PROCAT</h1>
+					</section>
+					<section>
+						<h2>PROCAT</h2>
+						<p>20 years old..</p> <!-- TODO -->
+						<p>Record Document vs Record Description</p>
 					</section>
 					<section>
 						<h2>Data elements relating to closure</h2>
@@ -142,7 +152,7 @@
 						<ul>
 							<li class="fragment" data-fragment-index="1">Replace PROCAT and other catalogue systems</li>
 							<li class="fragment" data-fragment-index="2">Linked Data, graph-based catalogue</li>
-							<li class="fragment" data-fragment-index="3">Utilise Matterhorn RDF Data Model</li>
+							<li class="fragment" data-fragment-index="3">Utilise Matterhorn RDF Data Model</li> <!-- TODO explain -->
 						</ul>
 					</section>
 					<section>
@@ -152,6 +162,7 @@
 					</section>
 					<section>
 						<h2>Catalogue Data Model</h2>
+						<!-- TODO - what is this? -->
 						<img class="r-stretch" src="images/ocdm_description_of_a_record_item.png"/>
 					</section>
 					<section>
@@ -185,7 +196,7 @@
 							</code></pre>
 					</section>
 					<section>
-						<h2>Why ODRL?</h2>
+						<h2>Why ODRL for Closure?</h2>
 						<ul>
 							<li class="fragment" data-fragment-index="1">Project Omega had already made the decision to use an RDF graph model</li>
 							<li class="fragment" data-fragment-index="2">Matterhorn approach encourages reusing existing vocabularies</li>
@@ -229,21 +240,25 @@
                 skos:definition "To read a record document." .
 						</code></pre>
 					</section>
-
 					<section>
-						<h3>Closure policy as natural language expression</h3>
+						<h2>Default policy of closure</h2> <!-- TODO describe -->
+						<p>Protect records for National Security or personal reasons</p>
+						<p>ODRL has policy hierarchy</p>
+					</section>
+					<section>
+						<h3>Default closure policy as natural language expression</h3> <!-- TODO test -->
 						<div>
 							<p style="font-style:italic;">"The National Archives prohibits the public from reading the record description or realisation."</p>
 						</div>
 					</section>
 					<section>
-						<h3>Closure policy as natural language expression</h3>
+						<h3>Default closure policy as natural language expression</h3>
 						<div>
 							<p style="font-style:italic;">"The National Archives <span class="fragment highlight-red" data-fragment-index="1">(assigner)</span> prohibts <span class="fragment highlight-red" data-fragment-index="2">(prohibition)</span> the public <span class="fragment highlight-red" data-fragment-index="3">(assignees)</span> from reading <span class="fragment highlight-red" data-fragment-index="4">(action)</span> the record description or record document <span class="fragment highlight-red" data-fragment-index="5">(asset)</span>"</p>
 						</div>
 					</section>
 					<section>
-						<h2>Closure policy</h2>
+						<h2>Default closure policy</h2>
 						<pre class="r-stretch"><code data-trim="true">
 							@prefix cat:  &lt;http://catalogue.nationalarchives.gov.uk/&gt; .
 							@prefix nat:  &lt;http://www.nationalarchives.gov.uk/&gt; .
